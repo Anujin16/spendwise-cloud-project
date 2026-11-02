@@ -2,6 +2,7 @@ import os
 from datetime import date
 import psycopg2
 from flask import Flask, redirect, render_template_string, request
+import socket
 
 app = Flask(__name__)
 
@@ -114,6 +115,10 @@ def delete(expense_id):
     cur.close()
     conn.close()
     return redirect("/")
+
+@app.route("/whoami")
+def whoami():
+    return socket.gethostname()
 
 
 if __name__ == "__main__":

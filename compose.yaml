@@ -13,12 +13,18 @@ services:
       interval: 5s
       timeout: 3s
       retries: 10
+        
     restart: unless-stopped
 
   web:
     build: ./app
     environment:
       DB_HOST: db
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
     deploy:
       replicas: 3
     depends_on:

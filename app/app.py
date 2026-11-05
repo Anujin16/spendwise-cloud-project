@@ -1,8 +1,8 @@
 import os
+import socket
 from datetime import date
 import psycopg2
 from flask import Flask, redirect, render_template_string, request
-import socket
 
 app = Flask(__name__)
 
@@ -116,9 +116,15 @@ def delete(expense_id):
     conn.close()
     return redirect("/")
 
+
 @app.route("/whoami")
 def whoami():
     return socket.gethostname()
+
+
+@app.route("/health")
+def health():
+    return "ok"
 
 
 if __name__ == "__main__":
